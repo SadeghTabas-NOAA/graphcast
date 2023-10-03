@@ -25,10 +25,19 @@ fi
 # Combine the date and closest past hour to get the desired timestamp
 desired_datetime="${current_datetime:0:8}${closest_hour}"
 
-# Execute the first Python script with the desired timestamp
+# Load wgrib2 module
+module use /contrib/spack-stack/envs/ufswm/install/modulefiles/Core/
+module load stack-intel
+module load wgrib2
+
+# Activate conda environment
+source activate graphcast
+cd /contrib/Sadegh.Tabas/graphcast/
+
+# Execute the gdas utility Python script with the desired timestamp
 python gdas_utility.py "$desired_datetime" "$desired_datetime" -k no
 
-# Execute the second Python script
+# Execute the graphcast Python script
 python graphcast.py
 
 # Print a message indicating the job is done
